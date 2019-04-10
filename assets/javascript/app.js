@@ -1,0 +1,1 @@
+//Idea, we learned how to make one button red on click, and some buttons blue on click. 
