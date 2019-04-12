@@ -6,7 +6,12 @@ var timeTime
 var counter = 0;
 var timer = 15
 
-
+let question = ""
+let answer1 = ""
+let answer2 = ""
+let answer3 = ""
+let answer4 = ""
+let correctAnswer = ""
 
 var questionList = [
     {
@@ -66,30 +71,33 @@ $(document).ready(function () {
 
     //DONE:  This question will loop thru depending on the 'counter' variable
     function questionLooper() {
+    //DONE: Give each ID an attr with data name so that we can grab it later with 'This'
 
-        console.log("The current counter is: ", counter);
-        let question = questionList[counter].question;
-        let answer1 = questionList[counter].answers[0].answer
-        let answer2 = questionList[counter].answers[1].answer
-        let answer3 = questionList[counter].answers[2].answer
-        let answer4 = questionList[counter].answers[3].answer
-        let correctAnswer = questionList[counter].correctanswer
+        // console.log("The current counter is: ", counter);
+        question = questionList[counter].question;
+        answer1 = questionList[counter].answers[0].answer
+        answer2 = questionList[counter].answers[1].answer
+        answer3 = questionList[counter].answers[2].answer
+        answer4 = questionList[counter].answers[3].answer
+        correctAnswer = questionList[counter].correctanswer
 
-        console.log("the correct answer is: ", correctAnswer);
+       
         $("#result").empty();
         $("#question-text").text(question);
-        $("#answer1").text(answer1);
-        $("#answer2").text(answer2);
-        $("#answer3").text(answer3);
-        $("#answer4").text(answer4);
+        $("#answer1").attr("data-name", answer1).text(answer1);
+        $("#answer2").attr("data-name", answer2).text(answer2);
+        $("#answer3").attr("data-name", answer3).text(answer3);
+        $("#answer4").attr("data-name", answer4).text(answer4);
 
     };
 
     $(".answer-button").on("click", function(){
         // $("#result").text("THE ANSWER IS CORRECT")
-        console.log("the button clicked was: ", this);
+        console.log("the correct answer is: ", correctAnswer);
+       console.log(this);
         //TODO: Extract the value of 'this'
-
+        var buttonClick = $(this).attr("data-name");
+        console.log("The clicked button has value of: ", buttonClick);
         //TODO: compare the value of 'this' to correctAnswer
 
 
@@ -98,17 +106,9 @@ $(document).ready(function () {
 
 
 
-    //TODO: Create clickable buttons for all of the options! We did this in class in week 6 ajax. 
-
-    //TODO: Create a Jumbotron that will hold everything
-
-    
-    //TODO: When Clicked, the button will .hide and begin the program and show the first question and all of its answers. 
-
-
     function nextQuestion (){
         counter++
-        setTimeout(questionLooper, 2000);
+        setTimeout(questionLooper, 5000);
        
     }
 
