@@ -1,5 +1,8 @@
 
 //Generate a list of questions and answers
+
+var counter = 0;
+var timer = 15
 var questionList = [
     {
         question: "How many championships do the Chicago Bulls have?",
@@ -41,7 +44,6 @@ var questionList = [
 
 
 
-
 $(document).ready(function () {
 
     //TODO: function to begin the game when clicked
@@ -57,25 +59,42 @@ $(document).ready(function () {
 
     function startGame() {
 
-
-        //     console.log(questionList[0].question);
-        //     console.log(questionList[0].answers[2]);
-        //     console.log(questionList[0].correctanswer);
-
-
-
-
-
+        questionLooper();
+    
 
 
 
     }
 
+    
 
 
+    //TODO: This question will loop thru depending on the 'counter' variable
+    function questionLooper() {
+    
+        let question = questionList[counter].question;
+        let answer1 = questionList[counter].answers[0].answer
+        let answer2 = questionList[counter].answers[1].answer
+        let answer3 = questionList[counter].answers[2].answer
+        let answer4 = questionList[counter].answers[3].answer
+
+        $("#question-text").text(question);
+        $("#answer1").text(answer1);
+        $("#answer2").text(answer2);
+        $("#answer3").text(answer3);
+        $("#answer4").text(answer4);
+
+       $(".answer-button").on("click", function(){
+
+        console.log("I HAVE BEEN TOUCHED");
+        counter++;
+        console.log(counter);
+        questionLooper();
+       })
+
+    };
 
 
-    // TODO: Have the questions and answers populate when the game is started
 
     // TODO: Find a way to extract what's clicked. And let that be stored in a variable to be compared against
     // TODO: the correct answer
