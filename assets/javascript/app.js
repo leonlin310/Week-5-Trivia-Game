@@ -1,8 +1,13 @@
 
 //Generate a list of questions and answers
 
+    //timeTime is just a test variable to help delay the 'counter++' code
+var timeTime
 var counter = 0;
 var timer = 15
+
+
+
 var questionList = [
     {
         question: "How many championships do the Chicago Bulls have?",
@@ -51,63 +56,61 @@ $(document).ready(function () {
         $("#startButton").fadeOut("slow", function () {
         });
 
-
-        startGame();
+        //runs the questionLooper function to display the first question
+        questionLooper();
     })
 
 
 
-    function startGame() {
-
-        questionLooper();
-    
 
 
-
-    }
-
-    
-
-
-    //TODO: This question will loop thru depending on the 'counter' variable
+    //DONE:  This question will loop thru depending on the 'counter' variable
     function questionLooper() {
-    
+
+        console.log("The current counter is: ", counter);
         let question = questionList[counter].question;
         let answer1 = questionList[counter].answers[0].answer
         let answer2 = questionList[counter].answers[1].answer
         let answer3 = questionList[counter].answers[2].answer
         let answer4 = questionList[counter].answers[3].answer
+        let correctAnswer = questionList[counter].correctanswer
 
+        console.log("the correct answer is: ", correctAnswer);
+        $("#result").empty();
         $("#question-text").text(question);
         $("#answer1").text(answer1);
         $("#answer2").text(answer2);
         $("#answer3").text(answer3);
         $("#answer4").text(answer4);
 
-       $(".answer-button").on("click", function(){
-
-        console.log("I HAVE BEEN TOUCHED");
-        counter++;
-        console.log(counter);
-        questionLooper();
-       })
-
     };
 
+    $(".answer-button").on("click", function(){
+        // $("#result").text("THE ANSWER IS CORRECT")
+        console.log("the button clicked was: ", this);
+        //TODO: Extract the value of 'this'
+
+        //TODO: compare the value of 'this' to correctAnswer
 
 
-    // TODO: Find a way to extract what's clicked. And let that be stored in a variable to be compared against
-    // TODO: the correct answer
+        nextQuestion();
+        })
+
+
 
     //TODO: Create clickable buttons for all of the options! We did this in class in week 6 ajax. 
 
     //TODO: Create a Jumbotron that will hold everything
 
-    //TODO: Create a "Welcome to Bulls Trivia" with a "Click here to begin"
+    
     //TODO: When Clicked, the button will .hide and begin the program and show the first question and all of its answers. 
 
 
-
+    function nextQuestion (){
+        counter++
+        setTimeout(questionLooper, 2000);
+       
+    }
 
 
 
