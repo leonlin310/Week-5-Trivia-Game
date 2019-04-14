@@ -67,15 +67,11 @@ var questionList = [
 
 
 
-
-
-
-
 $(document).ready(function () {
 
-$("#questionBoard").hide();
+    $("#questionBoard").hide();
 
-    //TODO: function to begin the game when clicked
+    //DONE: function to begin the game when clicked
     $("#startButton").on("click", function () {
         $("#startButton").fadeOut("slow", function () {
         });
@@ -85,23 +81,20 @@ $("#questionBoard").hide();
     })
 
 
-
-
-
     //DONE:  This question will loop thru depending on the 'counter' variable
     function questionLooper() {
         $(".answer-button").show();
-        //TODO: Set a timeout for 15 seconds to count a question wrong
+        //DONE: Set a timeout for 15 seconds to count a question wrong
         setTimeout(nineSeconds, 1);
-        //TODO: set a timeout warning for 5 seconds
+        //DONE: set a timeout warning for 5 seconds
         setTimeout(fiveSeconds, 1000 * 15);
-        //TODO: set a timeout for You Ran out of Time
+        //DONE: set a timeout for You Ran out of Time
         timerAlert = setTimeout(timeUp, 1000 * 20);
         // setTimeout(timeUp, 1000 * 15);
         //DONE: Give each ID an attr with data name so that we can grab it later with 'This'
         $("#questionBoard").show();
-        
-        // console.log("The current counter is: ", counter);
+
+        // Since the variables are global, 
         question = questionList[counter].question;
         answer1 = questionList[counter].answers[0].answer
         answer2 = questionList[counter].answers[1].answer
@@ -116,8 +109,6 @@ $("#questionBoard").hide();
         $("#answer2").attr("data-name", answer2).text(answer2);
         $("#answer3").attr("data-name", answer3).text(answer3);
         $("#answer4").attr("data-name", answer4).text(answer4);
-
-
 
     };
 
@@ -142,7 +133,6 @@ $("#questionBoard").hide();
             // updateScoreboard();
         }
 
-
         nextQuestion();
     })
 
@@ -152,7 +142,7 @@ $("#questionBoard").hide();
         counter++
         console.log("The current timer is: ", counter);
 
-     //TODO: if questions are at the max number stop the program and initiate finalScore function
+        //TODO: if questions are at the max number stop the program and initiate finalScore function
         if (counter >= 4) {
             finalScore();
         }
@@ -161,34 +151,30 @@ $("#questionBoard").hide();
             setTimeout(questionLooper, 4000);
 
         }
-
-
     }
 
 
     function finalScore() {
-        
+
         $("#questionBoard").hide();
-        $(".display-4").text("You got " + rightAnswer + " out of " + counter +  " questions right. You may or may not be a Bulls Fan.")
+        $(".display-4").text("You got " + rightAnswer + " out of " + counter + " questions right. You may or may not be a Bulls Fan.")
 
 
     }
 
     //TODO: Timeout functions
-    function nineSeconds(){
+    function nineSeconds() {
         $("#timer-text").text("you have 15 seconds left on the shot clock!").css("color", "black");
-        console.log("timer set");
 
     }
 
-    function fiveSeconds(){
+    function fiveSeconds() {
         $("#timer-text").text("YOU HAVE 5 SECONDS LEFT ON THE SHOT CLOCK!!").css("color", "red");
-        console.log("second timer set");
     }
 
-    function timeUp(){
+    function timeUp() {
         $(".answer-button").hide();
-        $("#timer-text").text("You ran out of time. The correct answer was: "+ correctAnswer);
+        $("#timer-text").text("You ran out of time. The correct answer was: " + correctAnswer);
         setTimeout(nextQuestion, 1000);
     }
 
