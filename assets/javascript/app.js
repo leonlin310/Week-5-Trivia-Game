@@ -2,9 +2,10 @@
 //Generate a list of questions and answers
 
 //timeTime is just a test variable to help delay the 'counter++' code
-var timeTime
+
 var counter = 0;
-var timer = 10
+
+var timerAlert
 
 //Store how many correct/wrong
 let rightAnswer = ""
@@ -89,8 +90,17 @@ $("#questionBoard").hide();
 
     //DONE:  This question will loop thru depending on the 'counter' variable
     function questionLooper() {
+        $(".answer-button").show();
+        //TODO: Set a timeout for 15 seconds to count a question wrong
+        setTimeout(nineSeconds, 1);
+        //TODO: set a timeout warning for 5 seconds
+        setTimeout(fiveSeconds, 1000 * 15);
+        //TODO: set a timeout for You Ran out of Time
+        timerAlert = setTimeout(timeUp, 1000 * 20);
+        // setTimeout(timeUp, 1000 * 15);
         //DONE: Give each ID an attr with data name so that we can grab it later with 'This'
         $("#questionBoard").show();
+        
         // console.log("The current counter is: ", counter);
         question = questionList[counter].question;
         answer1 = questionList[counter].answers[0].answer
@@ -112,20 +122,22 @@ $("#questionBoard").hide();
     };
 
     $(".answer-button").on("click", function () {
-        // $("#result").text("THE ANSWER IS CORRECT")
-        console.log("the correct answer is: ", correctAnswer);
+
+        //TODO: Create a clear timeout for function timeUp
+        clearTimeout(timerAlert);
+
         //DONE: Extract the value of 'this'
         var buttonClick = $(this).attr("data-name");
-        console.log("The clicked button has value of: ", buttonClick);
         //DONE: compare the value of 'this' to correctAnswer
         if (buttonClick == correctAnswer) {
             rightAnswer++
-            
+            $("#result").text("Swish! You should consider trying out for the Bulls!");
             // updateScoreboard();
             console.log("YOU ARE CORRECT!");
         }
         else {
             wrongAnswer++
+            $("#result").text("You're wrong! The correct answer is: " + correctAnswer);
             console.log("HAHA YOU SUCK DAWG!");
             // updateScoreboard();
         }
@@ -135,73 +147,49 @@ $("#questionBoard").hide();
     })
 
 
-    //TODO: Have the next question loop after 5 seconds
+    //TODO: Have the next question loop after 4 seconds
     function nextQuestion() {
         counter++
         console.log("The current timer is: ", counter);
 
-        //TODO: if questions are at the max number stop the program and initiate finalScore function
+     //TODO: if questions are at the max number stop the program and initiate finalScore function
         if (counter >= 4) {
             finalScore();
         }
 
         else {
-            setTimeout(questionLooper, 1000);
+            setTimeout(questionLooper, 4000);
 
         }
 
 
     }
 
-    // function updateScoreboard() {
-    //     $("#correct").text("# of questions Right:" + rightAnswer);
-    //     $("#wrong").text("# of questions Wrong: " + wrongAnswer);
-
-    // }
 
     function finalScore() {
         
         $("#questionBoard").hide();
-        $(".display-4").text("You got " + rightAnswer + " out of 4 questions right. You may or may not be a Bulls Fan.")
+        $(".display-4").text("You got " + rightAnswer + " out of " + counter +  " questions right. You may or may not be a Bulls Fan.")
 
 
     }
-    // THE LOGIC KIND OF works! now have a system to check user input vs answers
-    //     console.log(questionList[0].question);
-    //     console.log(questionList[0].answers[2]);
-    //     console.log(questionList[0].correctanswer);
 
-    //     let answerTest = questionList[0].answers[2].answer;
-    //     console.log("Answer should be 6",answerTest);
-    //     let correctanswerTest = questionList[0].correctanswer;
-    //     console.log("Correct answer should be 6 as well", correctanswerTest);
+    //TODO: Timeout functions
+    function nineSeconds(){
+        $("#timer-text").text("you have 15 seconds left on the shot clock!").css("color", "black");
+        console.log("timer set");
 
-    //     if (answerTest == correctanswerTest) {
-    //     console.log("true")
-    //     }
-    //     else {
-    //     console.log("false")
-    //     }
+    }
 
+    function fiveSeconds(){
+        $("#timer-text").text("YOU HAVE 5 SECONDS LEFT ON THE SHOT CLOCK!!").css("color", "red");
+        console.log("second timer set");
+    }
 
+    function timeUp(){
+        $(".answer-button").hide();
+        $("#timer-text").text("You ran out of time. The correct answer was: "+ correctAnswer);
+        setTimeout(nextQuestion, 1000);
+    }
 
-
-
-    // var theCobWeb = {
-    //     biggestWeb: {
-    //       item: "comb",
-    //       biggerWeb: {
-    //         items: ["glasses", "paperclip", "bubblegum"],
-    //         smallerWeb: {
-    //           item: "toothbrush",
-    //           tinyWeb: {
-    //             items: ["toenails", "lint", "wrapper", "homework"]
-    //           }
-    //         }
-    //       },
-    //       otherBigWeb: {
-    //         item: "headphones"
-    //       }
-    //     }
-    //   };
 });
