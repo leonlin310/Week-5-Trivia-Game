@@ -4,7 +4,7 @@
 //timeTime is just a test variable to help delay the 'counter++' code
 var timeTime
 var counter = 0;
-var timer = 15
+var timer = 10
 
 //Store how many correct/wrong
 let rightAnswer = ""
@@ -51,6 +51,17 @@ var questionList = [
         ],
         correctanswer: "D. Joakim Noah"
     },
+
+    {
+        question: "Who is not a GOAT?",
+        answers: [
+            { answer: "A. Roger Federer" },
+            { answer: "B. Michael Jordan" },
+            { answer: "C. Kobe" },
+            { answer: "D. Billy the Goat" }
+        ],
+        correctanswer: "C. Kobe"
+    },
 ];
 
 
@@ -60,6 +71,8 @@ var questionList = [
 
 
 $(document).ready(function () {
+
+$("#questionBoard").hide();
 
     //TODO: function to begin the game when clicked
     $("#startButton").on("click", function () {
@@ -77,7 +90,7 @@ $(document).ready(function () {
     //DONE:  This question will loop thru depending on the 'counter' variable
     function questionLooper() {
         //DONE: Give each ID an attr with data name so that we can grab it later with 'This'
-
+        $("#questionBoard").show();
         // console.log("The current counter is: ", counter);
         question = questionList[counter].question;
         answer1 = questionList[counter].answers[0].answer
@@ -94,6 +107,8 @@ $(document).ready(function () {
         $("#answer3").attr("data-name", answer3).text(answer3);
         $("#answer4").attr("data-name", answer4).text(answer4);
 
+
+
     };
 
     $(".answer-button").on("click", function () {
@@ -102,37 +117,55 @@ $(document).ready(function () {
         //DONE: Extract the value of 'this'
         var buttonClick = $(this).attr("data-name");
         console.log("The clicked button has value of: ", buttonClick);
-        //TODO: compare the value of 'this' to correctAnswer
+        //DONE: compare the value of 'this' to correctAnswer
         if (buttonClick == correctAnswer) {
             rightAnswer++
-            updateScoreboard();
+            
+            // updateScoreboard();
             console.log("YOU ARE CORRECT!");
         }
         else {
             wrongAnswer++
             console.log("HAHA YOU SUCK DAWG!");
-            updateScoreboard();
+            // updateScoreboard();
         }
 
-       
+
         nextQuestion();
     })
 
 
-
+    //TODO: Have the next question loop after 5 seconds
     function nextQuestion() {
         counter++
-        setTimeout(questionLooper, 5000);
+        console.log("The current timer is: ", counter);
+
+        //TODO: if questions are at the max number stop the program and initiate finalScore function
+        if (counter >= 4) {
+            finalScore();
+        }
+
+        else {
+            setTimeout(questionLooper, 1000);
+
+        }
+
 
     }
 
-    function updateScoreboard(){
-        $("#correct").text("# of questions Right:" + rightAnswer);
-        $("#wrong").text("# of questions Wrong: " + wrongAnswer);
+    // function updateScoreboard() {
+    //     $("#correct").text("# of questions Right:" + rightAnswer);
+    //     $("#wrong").text("# of questions Wrong: " + wrongAnswer);
+
+    // }
+
+    function finalScore() {
+        
+        $("#questionBoard").hide();
+        $(".display-4").text("You got " + rightAnswer + " out of 4 questions right. You may or may not be a Bulls Fan.")
+
 
     }
-
-
     // THE LOGIC KIND OF works! now have a system to check user input vs answers
     //     console.log(questionList[0].question);
     //     console.log(questionList[0].answers[2]);
